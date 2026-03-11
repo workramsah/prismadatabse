@@ -12,7 +12,7 @@ export default function Form(){
         const [buttonss, setButtons]= useState("")
 
         async function Handle() {
-            return await axios.post("/api/template/0", {
+            return await axios.post("/api/template", {
                 name: names,
                 language: languages,
                 category: categorys,

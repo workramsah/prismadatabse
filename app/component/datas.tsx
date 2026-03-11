@@ -1,15 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Template } from "../generated/prisma/models";
+import type { TemplateModel } from "../generated/prisma/models";
 import Metatemp from "./Metatemp";
 
 export default function Datas() {
-    const [templates, setTemplates] = useState<Template[]>([]);
+    const [templates, setTemplates] = useState<TemplateModel[]>([]);
 
     useEffect(() => {
         const fetchTemplates = async () => {
             try {
-                const response = await axios.get("/api/template/[id]");
+                const response = await axios.get("/api/template");
                 setTemplates(response.data);
             } catch (error) {
                 console.error("Error fetching templates:", error);
