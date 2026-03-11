@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  password   String    @default("default")
+  name       String?
+  age        Int?
+  phone      Int?
+  post       Post[]
+  created_at DateTime  @default(now())
+  comments   Comment[]
+}
+
+model Post {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id       Int
+  title         String
+  description   String
+  comment_count BigInt    @default(0)
+  created_at    DateTime  @default(now())
+  comments      Comment[]
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  comment    String
+  created_at DateTime @default(now())
+}
+
+model Template {
+  id       Int    @id @default(autoincrement())
+  name     String
+  language String
+  category String @default("general")
+  Header   String
+  Message  String
+  Footer   String
+  Buttons  String
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  name String
+  price Int?
+}
+
