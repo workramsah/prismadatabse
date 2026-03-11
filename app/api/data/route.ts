@@ -8,13 +8,13 @@ export async function GET(){
         
     } catch (error) {
         console.error("Error in GET /api/data:", error);
+        const debugEnabled = process.env.API_DEBUG === "true";
         return NextResponse.json(
             {
                 error: "Failed to fetch products.",
-                details:
-                    process.env.NODE_ENV === "development"
-                        ? (error instanceof Error ? error.message : String(error))
-                        : undefined,
+                details: debugEnabled
+                    ? (error instanceof Error ? error.message : String(error))
+                    : undefined,
             },
             { status: 500 }
         );
