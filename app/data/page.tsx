@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { createUser } from "./actions";
+import View from "../component/View";
 
 export default function Page() {
   const [state, formAction, isPending] = useActionState(createUser, null);
@@ -51,6 +52,8 @@ export default function Page() {
       {state?.error && (
         <p className="text-red-600 text-sm">{state.error}</p>
       )}
+
+      <View />
     </div>
   );
 }
