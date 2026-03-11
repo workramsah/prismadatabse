@@ -7,7 +7,17 @@ export async function GET(){
         return NextResponse.json(value);
         
     } catch (error) {
-        return NextResponse.json({error:"there is error."})
+        console.error("Error in GET /api/data:", error);
+        return NextResponse.json(
+            {
+                error: "Failed to fetch products.",
+                details:
+                    process.env.NODE_ENV === "development"
+                        ? (error instanceof Error ? error.message : String(error))
+                        : undefined,
+            },
+            { status: 500 }
+        );
     }
 
 }
